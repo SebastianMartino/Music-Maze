@@ -3,6 +3,7 @@ import pygame
 from pygame.locals import *
 import sys
 import noteObject
+import noteToYPosLookup
 
 # pygame GameObject class
 class GameObject:
@@ -41,27 +42,32 @@ class GameObject:
         # Blit image onto screen     
         self.screen.blit(self.staffImage, (0, 0))
 
-        self.note = noteObject.NoteObject()
-        self.note.setXPos(500)
-        self.note.setYPos(0)
+        # Create lookup table for note y coordinates
+        self.noteYLookup = noteToYPosLookup.NoteToYPosLookup(60,246,361,480,666)
 
-        pygame.draw.circle(self.screen, self.BLACK, (self.note.xPos, self.note.yPos), self.note.size)
+        # Create first note on F5
+        self.note1 = noteObject.NoteObject()
+        self.note1.setXPos(500)
+        self.note1.setYPos(60)
+
+        pygame.draw.circle(self.screen, self.BLACK, (self.note1.xPos, self.note1.yPos), self.note1.size)
 
 
     # Function to move a note on the screen
-    def moveNote(self, noteInst, newX, newY):
+    def updateNote(self, noteInst, noteDescription):
 
-        # Check that note isn't moving off of screen
-        if (newX > 0 and newX < self.staffWidth and newY > 0 and newY < self.staffHeight):
+        #Use lookup table to find y pos of note
+        newYpos = self.noteYLookup.lookupYPos(noteDescription)
+
+        if newYpos != None:
             # Fill Screen & Re-Blit the staff
             self.screen.fill(self.WHITE)
             self.screen.blit(self.staffImage, (0, 0))
 
-            noteInst.setXPos(newX)
-            print("X Position: " + str(newX))
-
-            noteInst.setYPos(newY)
-            print("Y Position: " + str(newY))
+            # Update internal note parameters
+            noteInst.setNote(noteDescription)
+            noteInst.setXPos(500)
+            noteInst.setYPos(newYpos)
 
             pygame.draw.circle(self.screen, self.BLACK, (noteInst.xPos, noteInst.yPos), noteInst.size)
 
@@ -70,7 +76,7 @@ class GameObject:
     def gameLoopInstance(self):
 
         # Update Screen   
-        pygame.display.update()
+        pygame.display.flip()
    
         #Check for events
         for event in pygame.event.get():
@@ -80,11 +86,17 @@ class GameObject:
                 sys.exit()
                 # quit the program.   
                 quit()
-            #Check for key press events
-            if event.type == pygame.KEYDOWN and event.key == pygame.K_DOWN:
-                self.moveNote(self.note, 500, self.note.yPos + 1)
-            if event.type == pygame.KEYDOWN and event.key == pygame.K_UP:
-                self.moveNote(self.note, 500, self.note.yPos - 1)
+            if event.type == pygame.KEYDOWN and event.key ==pygame.K_g:
+                self.updateNote(self.note1, "G4")
+            if event.type == pygame.KEYDOWN and event.key ==pygame.K_b:
+                self.updateNote(self.note1, "B4")
+            if event.type == pygame.KEYDOWN and event.key ==pygame.K_d:
+                self.updateNote(self.note1, "D3")
+            if event.type == pygame.KEYDOWN and event.key ==pygame.K_a:
+                self.updateNote(self.note1, "A3")
+
+        self.updateNote(self.note1, #putvalue here)
+        
 
         self.FramePerSec.tick(self.FPS)
 
