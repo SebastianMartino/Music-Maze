@@ -15,7 +15,7 @@ class AudioFrequency:
 		self.stream = self.p.open(format = self.FORMAT, channels = self.CHANNELS, 
 					rate = self.RATE, input = True, frames_per_buffer = self.buffer_size)
 
-		self.tolerance = 0.8
+		self.tolerance = 0.3
 		self.win_s = 4096 # fft size
 		self.hop_s = self.buffer_size # hop size
 		self.pitch_o = aubio.pitch("default", self.win_s, self.hop_s, self.RATE)
@@ -27,7 +27,7 @@ class AudioFrequency:
 		signal = np.fromstring(audiobuffer, dtype=np.float32)
 		pitch = self.pitch_o(signal)[0]
 		confidence = self.pitch_o.get_confidence()
-		#print(pitch, confidence)
+		print(pitch, confidence)
 		return pitch
 
 
@@ -40,13 +40,12 @@ class AudioFrequency:
 		self.stream.close()
 		self.p.terminate()
 
-'''
-How to use example
 
+#How to use example
+'''
 a = AudioFrequency()
 while(1):
-	f = a.get_frequency()
-	note = a.get_note(f)
-	if note != "No note":
-		print(note)
-'''
+	note = a.get_note()
+	#if note != "No note":
+		#print(note)
+#'''
