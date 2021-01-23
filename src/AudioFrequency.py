@@ -35,7 +35,9 @@ class AudioFrequency:
 		#print("The freq is %f Hz." % (frequency))
 		return frequency
 
-	def get_note(self, frequency):
+	def get_note(self):
+		frequency = self.get_frequency()
+		print(freq_dict.get(int(frequency), "No note"))
 		return freq_dict.get(int(frequency), "No note")
 
 	def close():

@@ -4,6 +4,7 @@ from pygame.locals import *
 import sys
 import noteObject
 import noteToYPosLookup
+from AudioFrequency import AudioFrequency
 
 # pygame GameObject class
 class GameObject:
@@ -23,7 +24,7 @@ class GameObject:
     def __init__ (self):
         # Initialize pygame
         pygame.init()
-
+        self.audio = AudioFrequency()
         # Assign FPS value
         self.FPS = 30
         self.FramePerSec = pygame.time.Clock()
@@ -95,7 +96,7 @@ class GameObject:
             if event.type == pygame.KEYDOWN and event.key ==pygame.K_a:
                 self.updateNote(self.note1, "A3")
 
-        self.updateNote(self.note1, #putvalue here)
+        self.updateNote(self.note1, self.audio.get_note())
         
 
         self.FramePerSec.tick(self.FPS)
