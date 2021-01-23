@@ -13,7 +13,7 @@ class Maze:
 			self.south = None
 
 			self.visisted = False
-			
+
 	class Dir(Enum):
 		NORTH = 0
 		EAST = 1
@@ -128,4 +128,4 @@ class Maze:
 
 	
 
-Maze((10,10), 0, 0)
+#Maze((10,10), 0, 0)
