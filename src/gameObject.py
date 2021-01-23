@@ -35,13 +35,17 @@ class GameObject:
         pygame.display.set_caption('Music-Maze')
 
         # Create surface object with staff image drawn on it 
-        self.staffImage = pygame.image.load(r'../img/staff-image-blank.jpg')
-        self.staffImage = pygame.transform.scale(self.staffImage, (self.staffWidth, self.staffHeight)) 
+        self.staffImage = pygame.image.load(r'../img/grandStaff.png')
+        self.staffImage = pygame.transform.scale(self.staffImage, (self.staffWidth, self.staffHeight - 50)) 
 
         # Blit image onto screen     
         self.screen.blit(self.staffImage, (0, 0))
 
         self.note = noteObject.NoteObject()
+        self.note.setXPos(500)
+        self.note.setYPos(0)
+
+        pygame.draw.circle(self.screen, self.BLACK, (self.note.xPos, self.note.yPos), self.note.size)
 
 
     # Function to move a note on the screen
@@ -49,14 +53,17 @@ class GameObject:
 
         # Check that note isn't moving off of screen
         if (newX > 0 and newX < self.staffWidth and newY > 0 and newY < self.staffHeight):
-            #Re-Blit the staff
+            # Fill Screen & Re-Blit the staff
+            self.screen.fill(self.WHITE)
             self.screen.blit(self.staffImage, (0, 0))
 
             noteInst.setXPos(newX)
+            print("X Position: " + str(newX))
 
             noteInst.setYPos(newY)
+            print("Y Position: " + str(newY))
 
-            pygame.draw.circle(self.screen, self.BLACK, (noteInst.xPos, noteInst.yPos), 20)
+            pygame.draw.circle(self.screen, self.BLACK, (noteInst.xPos, noteInst.yPos), noteInst.size)
 
 
     # Main game loop
@@ -75,9 +82,9 @@ class GameObject:
                 quit()
             #Check for key press events
             if event.type == pygame.KEYDOWN and event.key == pygame.K_DOWN:
-                self.moveNote(self.note, 500, self.note.yPos + 20)
+                self.moveNote(self.note, 500, self.note.yPos + 1)
             if event.type == pygame.KEYDOWN and event.key == pygame.K_UP:
-                self.moveNote(self.note, 500, self.note.yPos - 20)
+                self.moveNote(self.note, 500, self.note.yPos - 1)
 
         self.FramePerSec.tick(self.FPS)
 
