@@ -70,7 +70,13 @@ class GameObject:
             noteInst.setXPos(500)
             noteInst.setYPos(newYpos)
 
-            pygame.draw.circle(self.screen, self.BLACK, (noteInst.xPos, noteInst.yPos), noteInst.size)
+            pygame.draw.ellipse(self.screen, self.BLACK, (noteInst.xPos, noteInst.yPos), noteInst.size)
+            pygame.draw.line(self.screen,self.BLACK,(noteInst.xPos + (noteInst.size - 5),noteInst.yPos),(noteInst.xPos + (noteInst.size - 5),noteInst.yPos - 80), 7)
+
+            #Check if note is a sharp
+            if '\#' in noteDescription:
+                pygame.draw.line(self.screen, self.BLACK, (noteInst.xPos + (noteInst.size +5), noteInst.yPos), (noteInst.xPos + (noteInst.size + 20), noteInst.yPos ), 7)
+            
 
 
     # Main game loop
