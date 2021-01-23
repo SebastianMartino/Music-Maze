@@ -74,8 +74,13 @@ class GameObject:
             pygame.draw.line(self.screen,self.BLACK,(noteInst.xPos + (noteInst.size - 5),noteInst.yPos),(noteInst.xPos + (noteInst.size - 5),noteInst.yPos - 80), 7)
 
             #Check if note is a sharp
-            if "#" in noteDescription:
-                pygame.draw.line(self.screen, self.BLACK, (noteInst.xPos + (noteInst.size +5), noteInst.yPos), (noteInst.xPos + (noteInst.size + 20), noteInst.yPos ), 7)
+            if("#" in noteDescription):
+                pygame.draw.line(self.screen, self.BLACK, (noteInst.xPos + (noteInst.size +5), noteInst.yPos - 10), (noteInst.xPos + (noteInst.size + 20), noteInst.yPos - 10), 3)
+                pygame.draw.line(self.screen, self.BLACK, (noteInst.xPos + (noteInst.size + 12.5), noteInst.yPos - 20), (noteInst.xPos + (noteInst.size + 12.5), noteInst.yPos), 3)
+            
+            #Check if note is middle c
+            if("C4" in noteDescription or "C#4" in noteDescription):
+                pygame.draw.line(self.screen, self.BLACK, (noteInst.xPos - (noteInst.size + 20), noteInst.yPos), (noteInst.xPos + (noteInst.size + 20), noteInst.yPos), 7)
             
 
 
