@@ -15,7 +15,7 @@ class AudioFrequency:
 					rate = self.RATE, input = True, frames_per_buffer = self.CHUNK)
 
 	def get_frequency(self):
-		data = self.stream.read(self.CHUNK)
+		data = self.stream.read(self.CHUNK, exception_on_overflow=False)
 		indata = np.array(wave.struct.unpack("%dh"%(self.CHUNK), data))
 		fftData=abs(np.fft.rfft(indata))**2
 
