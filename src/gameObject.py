@@ -84,6 +84,7 @@ class GameObject:
             # Check for quit event & close program  
             if event.type == QUIT:  
                 pygame.quit()
+                self.audio.close()
                 sys.exit()
                 # quit the program.   
                 quit()
