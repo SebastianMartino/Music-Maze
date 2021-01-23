@@ -1,44 +1,40 @@
 import pyaudio
 import numpy as np
 import wave
-from freq_dict import freq_dict
+from midi_dict import midi_dict
+import aubio
 
 
 class AudioFrequency:
 	def __init__(self):
-		self.CHUNK = 4096
-		self.FORMAT = pyaudio.paInt16
+		self.buffer_size = 1024
+		self.FORMAT = pyaudio.paFloat32
 		self.CHANNELS = 1
 		self.RATE = 44100
 		self.p = pyaudio.PyAudio()
 		self.stream = self.p.open(format = self.FORMAT, channels = self.CHANNELS, 
-					rate = self.RATE, input = True, frames_per_buffer = self.CHUNK)
+					rate = self.RATE, input = True, frames_per_buffer = self.buffer_size)
 
-	def get_frequency(self):
-		data = self.stream.read(self.CHUNK, exception_on_overflow=False)
-		indata = np.array(wave.struct.unpack("%dh"%(self.CHUNK), data))
-		fftData=abs(np.fft.rfft(indata))**2
+		self.tolerance = 0.8
+		self.win_s = 4096 # fft size
+		self.hop_s = self.buffer_size # hop size
+		self.pitch_o = aubio.pitch("default", self.win_s, self.hop_s, self.RATE)
+		self.pitch_o.set_unit("midi")
+		self.pitch_o.set_tolerance(self.tolerance)
 
-		#Sorts frequencies by amplitude
-		temp = fftData.argsort()
+	def get_pitch(self):
+		audiobuffer = self.stream.read(self.buffer_size)
+		signal = np.fromstring(audiobuffer, dtype=np.float32)
+		pitch = self.pitch_o(signal)[0]
+		confidence = self.pitch_o.get_confidence()
+		#print(pitch, confidence)
+		return pitch
 
-		#The top 3 frequencies
-		most_frequents = temp[-3:][::-1]
-
-		#Top frequency
-		top_freq = most_frequents[0]
-		#if fftData[which[1]] < fftData[which[0]]:
-			#print("NOT ENOUGH")
-			#return -1
-		
-		frequency = top_freq*self.RATE/self.CHUNK
-		#print("The freq is %f Hz." % (frequency))
-		return frequency
 
 	def get_note(self):
-		frequency = self.get_frequency()
-		print(freq_dict.get(int(frequency), "No note"))
-		return freq_dict.get(int(frequency), "No note")
+		pitch = self.get_pitch()
+		#print(freq_dict.get(int(frequency), "No note"))
+		return midi_dict.get(int(pitch), "No note")
 
 	def close(self):
 		self.stream.close()
