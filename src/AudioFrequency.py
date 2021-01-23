@@ -40,7 +40,7 @@ class AudioFrequency:
 		print(freq_dict.get(int(frequency), "No note"))
 		return freq_dict.get(int(frequency), "No note")
 
-	def close():
+	def close(self):
 		self.stream.close()
 		self.p.terminate()
 
