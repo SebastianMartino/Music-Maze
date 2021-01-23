@@ -23,7 +23,7 @@ class AudioFrequency:
 		self.pitch_o.set_tolerance(self.tolerance)
 
 	def get_pitch(self):
-		audiobuffer = self.stream.read(self.buffer_size)
+		audiobuffer = self.stream.read(self.buffer_size, exception_on_overflow=False)
 		signal = np.fromstring(audiobuffer, dtype=np.float32)
 		pitch = self.pitch_o(signal)[0]
 		confidence = self.pitch_o.get_confidence()
