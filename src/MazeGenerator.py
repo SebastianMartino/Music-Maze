@@ -4,13 +4,14 @@ import pygame
 
 class Maze:
 	class Room:
-		def __init__(self, x, y, screen, width):
+		def __init__(self, x, y, screen, width, offset):
+			
 			self.screen = screen
 			self.x = x
 			self.y = y
 			self.width = width
-			self.xx = x*width
-			self.yy = y*width
+			self.xx = x*width + offset[0]
+			self.yy = y*width + offset[1]
 
 			#True means there IS a wall in direction, False = no wall
 			self.north = None
@@ -42,7 +43,7 @@ class Maze:
 		WEST = 2
 		SOUTH = 3
 #def __init__(self, size, start_loc, end_loc):
-	def __init__(self, screen, size, width):
+	def __init__(self, screen, size, width, offset):
 		
 		self.maze = []
 		self.size = size
@@ -50,7 +51,7 @@ class Maze:
 		for i in range(size[0]):
 			temp = []
 			for j in range(size[1]):
-				temp.append(self.Room(i, j, screen, width))
+				temp.append(self.Room(i, j, screen, width, offset))
 			self.maze.append(temp)
 		self.drunken_walk(0,0)	
 		#print(self.maze)
