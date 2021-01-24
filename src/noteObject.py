@@ -10,7 +10,9 @@ class NoteObject:
 
         self.yPos = 0
 
-        self.size = 20
+        self.height = 160
+
+        self.width = 120
 
     def setXPos(self, newXPos):
         self.xPos = newXPos
@@ -18,8 +20,11 @@ class NoteObject:
     def setYPos(self, newYPos):
         self.yPos = newYPos
 
-    def setSize(self, newSize):
-        self.size = newSize
+    def setHeight(self, newHeight):
+        self.height = newHeight
+
+    def setWidth(self, newWidth):
+        self.width = newWidth
 
     def setNote(self, newNoteDescription):
         self.noteDescription = newNoteDescription

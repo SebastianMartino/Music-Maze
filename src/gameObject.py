@@ -31,7 +31,8 @@ class GameObject:
 
         # Creating the display surface  
         self.screen = pygame.display.set_mode((self.screenWidth, self.screenHeight))
-        self.screen.fill(self.WHITE)
+        self.background = pygame.image.load(r'../img/textured-background.jpg')
+        
 
         # Set the pygame window name   
         pygame.display.set_caption('Music-Maze')
@@ -40,7 +41,8 @@ class GameObject:
         self.staffImage = pygame.image.load(r'../img/grandStaff.png')
         self.staffImage = pygame.transform.scale(self.staffImage, (self.staffWidth, self.staffHeight - 50)) 
 
-        # Blit image onto screen     
+        # Blit image onto screen
+        self.screen.blit(self.background, (0, 0))     
         self.screen.blit(self.staffImage, (0, 0))
 
         # Create lookup table for note y coordinates
@@ -51,7 +53,7 @@ class GameObject:
         self.note1.setXPos(500)
         self.note1.setYPos(60)
 
-        pygame.draw.circle(self.screen, self.BLACK, (self.note1.xPos, self.note1.yPos), self.note1.size)
+        # pygame.draw.circle(self.screen, self.BLACK, (self.note1.xPos, self.note1.yPos), self.note1.size)
 
 
     # Function to move a note on the screen
@@ -62,7 +64,7 @@ class GameObject:
 
         if newYpos != None:
             # Fill Screen & Re-Blit the staff
-            self.screen.fill(self.WHITE)
+            self.screen.blit(self.background, (0, 0))
             self.screen.blit(self.staffImage, (0, 0))
 
             # Update internal note parameters
@@ -70,17 +72,24 @@ class GameObject:
             noteInst.setXPos(500)
             noteInst.setYPos(newYpos)
 
-            pygame.draw.circle(self.screen, self.BLACK, (noteInst.xPos, noteInst.yPos), noteInst.size)
-            pygame.draw.line(self.screen,self.BLACK,(noteInst.xPos + (noteInst.size - 5),noteInst.yPos),(noteInst.xPos + (noteInst.size - 5),noteInst.yPos - 80), 7)
+            noteSprite = pygame.image.load(r'../img/quarter-note.png').convert_alpha()
+
+            # pygame.draw.circle(self.screen, self.BLACK, (noteInst.xPos, noteInst.yPos), noteInst.size)
+            # pygame.draw.line(self.screen,self.BLACK,(noteInst.xPos + (noteInst.size - 5),noteInst.yPos),(noteInst.xPos + (noteInst.size - 5),noteInst.yPos - 80), 7)
 
             #Check if note is a sharp
             if("#" in noteDescription):
-                pygame.draw.line(self.screen, self.BLACK, (noteInst.xPos + (noteInst.size +5), noteInst.yPos - 10), (noteInst.xPos + (noteInst.size + 20), noteInst.yPos - 10), 3)
-                pygame.draw.line(self.screen, self.BLACK, (noteInst.xPos + (noteInst.size + 12.5), noteInst.yPos - 20), (noteInst.xPos + (noteInst.size + 12.5), noteInst.yPos), 3)
+                # pygame.draw.line(self.screen, self.BLACK, (noteInst.xPos + (noteInst.size +5), noteInst.yPos - 10), (noteInst.xPos + (noteInst.size + 20), noteInst.yPos - 10), 3)
+                # pygame.draw.line(self.screen, self.BLACK, (noteInst.xPos + (noteInst.size + 12.5), noteInst.yPos - 20), (noteInst.xPos + (noteInst.size + 12.5), noteInst.yPos), 3)
+                noteSprite = pygame.image.load(r'../img/quarter-note-sharp.png').convert_alpha()
             
             #Check if note is middle c
             if("C4" in noteDescription or "C#4" in noteDescription):
-                pygame.draw.line(self.screen, self.BLACK, (noteInst.xPos - (noteInst.size + 20), noteInst.yPos), (noteInst.xPos + (noteInst.size + 20), noteInst.yPos), 7)
+                pygame.draw.line(self.screen, self.BLACK, (noteInst.xPos, noteInst.yPos), (noteInst.xPos + (noteInst.width), noteInst.yPos), 7)
+                # noteSprite = pygame.image.load("quarter-note-sharp.png").convert_alpha()
+            
+            noteSprite = pygame.transform.scale(noteSprite, (noteInst.width, noteInst.height))
+            self.screen.blit(noteSprite, (noteInst.xPos, noteInst.yPos - noteInst.height + (noteInst.height/6)))
             
 
 
@@ -99,15 +108,8 @@ class GameObject:
                 sys.exit()
                 # quit the program.   
                 quit()
-            if event.type == pygame.KEYDOWN and event.key ==pygame.K_g:
-                self.updateNote(self.note1, "G4")
-            if event.type == pygame.KEYDOWN and event.key ==pygame.K_b:
-                self.updateNote(self.note1, "B4")
-            if event.type == pygame.KEYDOWN and event.key ==pygame.K_d:
-                self.updateNote(self.note1, "D3")
-            if event.type == pygame.KEYDOWN and event.key ==pygame.K_a:
-                self.updateNote(self.note1, "A3")
-
+        
+        # Update note position based on tone recognized by microphone
         self.updateNote(self.note1, self.audio.get_note())
         
 

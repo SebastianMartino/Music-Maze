@@ -1,3 +1,4 @@
+# Lookup table class that takes a note description (i.e. A4) and translates it to a vertical position on the grand staff
 class NoteToYPosLookup:
 
     def __init__(self, F5, E4, C4, A3, G2):
