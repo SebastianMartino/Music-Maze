@@ -133,5 +133,5 @@ class GameObject:
         if(self.isNoteCorrect()):
             newNote = random.choice(list(self.noteYLookup.lookupTable.keys()))
             self.updateNote(self.note1, newNote)
-
+        return self.isNoteCorrect()
 

@@ -11,7 +11,7 @@ class Maze:
 			self.y = y
 			self.width = width
 			self.xx = x*width + offset[0]
-			self.yy = y*width + offset[1]
+			self.yy = y*width + offset[1] + 75
 
 			#True means there IS a wall in direction, False = no wall
 			self.north = None

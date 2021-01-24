@@ -1,13 +1,22 @@
 import pygame
 from MazeGenerator import Maze
 import sys
+from staffObject import StaffObject
+from AudioFrequency import AudioFrequency
 
 
 def main():
 	pygame.init()
-	window_size = (1500,1000)
-	maze_pixel_size = (500,500)
+	window_size = (1280,900)
+	maze_pixel_size = (400,400)
 	screen = pygame.display.set_mode((window_size[0], window_size[1]))
+
+	# Set the pygame window name   
+	pygame.display.set_caption('Music-Maze')
+
+	background = pygame.image.load(r'../img/textured-background.jpg')
+
+	background = pygame.transform.scale(background, (window_size[0], window_size[1]))
 	#screen.fill((255,255,255))
 	clock = pygame.time.Clock()
 	screen.fill((255,255,255))
@@ -27,8 +36,20 @@ def main():
 	x,y = maze_o.current_loc
 	maze[x][y].north
 	#print(maze)
+
+	#Shared Audio Object
+	audio = AudioFrequency()
+
+	#Grand Staff Objects
+	staffUp = StaffObject(screen, 550, 50)
+	staffDown = StaffObject(screen, 550, 600)
+	staffLeft = StaffObject(screen, 50, 300)
+	staffRight = StaffObject(screen, 1050, 300)
+
+
 	running = True
 	while running:
+		screen.blit(background, (0, 0))
 		for event in pygame.event.get():
 			if event.type == pygame.QUIT:
 				running = False
@@ -39,10 +60,47 @@ def main():
 				
 				maze[j][i].draw()
 
+		staffUp.reDraw()
+		staffDown.reDraw()
+		staffLeft.reDraw()
+		staffRight.reDraw()
+		
+		notePlayed = audio.get_note()
+		isUp = staffUp.isNoteCorrect(notePlayed)
+		isDown = staffDown.isNoteCorrect(notePlayed)
+		isLeft = staffLeft.isNoteCorrect(notePlayed)
+		isRight = staffRight.isNoteCorrect(notePlayed)
+
+		if isUp:
+			#Move up if possible
+			staffUp.randomizeNote()
+			staffDown.randomizeNote()
+			staffLeft.randomizeNote()
+			staffRight.randomizeNote()
+		elif isDown:
+			#Move down if possible
+			staffUp.randomizeNote()
+			staffDown.randomizeNote()
+			staffLeft.randomizeNote()
+			staffRight.randomizeNote()
+		elif isLeft:
+			#Move left if possible
+			staffUp.randomizeNote()
+			staffDown.randomizeNote()
+			staffLeft.randomizeNote()
+			staffRight.randomizeNote()
+		elif isRight:
+			#Move right if possible
+			staffUp.randomizeNote()
+			staffDown.randomizeNote()
+			staffLeft.randomizeNote()
+			staffRight.randomizeNote()
+
 		pygame.display.flip()
 		clock.tick(30)
 
 	pygame.quit()
 	sys.exit
 
-main()
+if (__name__ == "__main__"):
+    main()

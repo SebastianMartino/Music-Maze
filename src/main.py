@@ -11,9 +11,9 @@ import gameObject
 
 
 def main():
-    game = gameObject.GameObject()
+    staff1 = gameObject.GameObject()
     while True:
-        game.gameLoopInstancePlayMode()
+        staff1.gameLoopInstancePlayMode()
 
 
 
