@@ -11,3 +11,7 @@ Music Maze was coded in Python. [Pygame](https://www.pygame.org/) was used for t
 When the game is started, there will be a maze in the center and 4 different grand staffs. The location of the staff represents which note should be played to move in a certain direction.  After playing one of the notes, if possible, the RED square will move in that direction. The goal is to get the RED square to the GREEN square.
 
 ![Screenshot](gallery.jpg)
+
+## How to run
+Source code can be run with python with the following libraries installed: Pygame, Pyaudio, Aubio, Numpy.  
+There is also an executable available that does not require python installed. (Windows only)
