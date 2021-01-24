@@ -27,7 +27,7 @@ class AudioFrequency:
 		signal = np.fromstring(audiobuffer, dtype=np.float32)
 		pitch = self.pitch_o(signal)[0]
 		confidence = self.pitch_o.get_confidence()
-		print(pitch, confidence)
+		#print(pitch, confidence)
 		return pitch
 
 

@@ -31,10 +31,10 @@ def main():
 	maze = maze_o.maze
 
 
-	maze_o.update_loc(1,2)
+	#maze_o.update_loc(1,2)
 
-	x,y = maze_o.current_loc
-	maze[x][y].north
+	#x,y = maze_o.current_loc
+	#maze[x][y].north
 	#print(maze)
 
 	#Shared Audio Object
@@ -71,30 +71,39 @@ def main():
 		isLeft = staffLeft.isNoteCorrect(notePlayed)
 		isRight = staffRight.isNoteCorrect(notePlayed)
 
+		cy, cx = maze_o.current_loc
 		if isUp:
 			#Move up if possible
-			staffUp.randomizeNote()
-			staffDown.randomizeNote()
-			staffLeft.randomizeNote()
-			staffRight.randomizeNote()
+			if maze[cx][cy].north:
+				maze_o.update_loc(cy+1, cx)
+				staffUp.randomizeNote()
+				staffDown.randomizeNote()
+				staffLeft.randomizeNote()
+				staffRight.randomizeNote()
 		elif isDown:
 			#Move down if possible
-			staffUp.randomizeNote()
-			staffDown.randomizeNote()
-			staffLeft.randomizeNote()
-			staffRight.randomizeNote()
+			if maze[cx][cy].south:
+				maze_o.update_loc(cy-1, cx)
+				staffUp.randomizeNote()
+				staffDown.randomizeNote()
+				staffLeft.randomizeNote()
+				staffRight.randomizeNote()
 		elif isLeft:
 			#Move left if possible
-			staffUp.randomizeNote()
-			staffDown.randomizeNote()
-			staffLeft.randomizeNote()
-			staffRight.randomizeNote()
+			if maze[cx][cy].west:
+				maze_o.update_loc(cy, cx-1)
+				staffUp.randomizeNote()
+				staffDown.randomizeNote()
+				staffLeft.randomizeNote()
+				staffRight.randomizeNote()
 		elif isRight:
 			#Move right if possible
-			staffUp.randomizeNote()
-			staffDown.randomizeNote()
-			staffLeft.randomizeNote()
-			staffRight.randomizeNote()
+			if maze[cx][cy].east:
+				maze_o.update_loc(cy+1, cx)
+				staffUp.randomizeNote()
+				staffDown.randomizeNote()
+				staffLeft.randomizeNote()
+				staffRight.randomizeNote()
 
 		pygame.display.flip()
 		clock.tick(30)
