@@ -1,10 +1,16 @@
 import random
 from enum import Enum
+import pygame
+
 class Maze:
 	class Room:
-		def __init__(self, x, y):
+		def __init__(self, x, y, screen, width):
+			self.screen = screen
 			self.x = x
 			self.y = y
+			self.width = width
+			self.xx = x*width
+			self.yy = y*width
 
 			#True means there IS a wall in direction, False = no wall
 			self.north = None
@@ -13,24 +19,50 @@ class Maze:
 			self.south = None
 
 			self.visisted = False
+			self.current = False
+
+		def draw(self):
+			if self.current == True:
+				pygame.draw.rect(self.screen, (255,0,0), (self.xx, self.yy, self.width, self.width))
+			else:
+				pygame.draw.rect(self.screen, (255,255,255), (self.xx, self.yy, self.width, self.width))
+
+			if self.south:
+				pygame.draw.line(self.screen,(0,0,0),(self.xx,self.yy),((self.xx + self.width),self.yy),3) # top
+			if self.east:
+				pygame.draw.line(self.screen,(0,0,0),((self.xx + self.width),self.yy),((self.xx + self.width),(self.yy + self.width)),3) # right
+			if self.north:
+				pygame.draw.line(self.screen,(0,0,0),((self.xx + self.width),(self.yy + self.width)),(self.xx,(self.yy + self.width)),3) # bottom
+			if self.west:
+				pygame.draw.line(self.screen,(0,0,0),(self.xx,(self.yy + self.width)),(self.xx,self.yy),3)
 
 	class Dir(Enum):
 		NORTH = 0
 		EAST = 1
 		WEST = 2
 		SOUTH = 3
-
-	def __init__(self, size, start_loc, end_loc):
+#def __init__(self, size, start_loc, end_loc):
+	def __init__(self, screen, size, width):
+		
 		self.maze = []
 		self.size = size
+		self.current_loc = [0,0]
 		for i in range(size[0]):
 			temp = []
 			for j in range(size[1]):
-				temp.append(self.Room(i, j))
+				temp.append(self.Room(i, j, screen, width))
 			self.maze.append(temp)
 		self.drunken_walk(0,0)	
-		print(self.maze)
-		self.print_maze()
+		#print(self.maze)
+		#self.print_maze()
+		self.maze[0][0].current = True
+
+	def update_loc(self, x,y):
+		self.maze[self.current_loc[0]][self.current_loc[1]].current = False
+		self.current_loc[0] = x
+		self.current_loc[1] = y
+		self.maze[x][y].current = True
+
 
 	def get_offset(self, direction):
 		if direction == self.Dir.NORTH:
@@ -115,7 +147,7 @@ class Maze:
 						self.set_room_dir(room, direction, wall_val)
 					else:
 						self.set_room_dir(room, direction, wall=True)
-
+	
 
 
 
