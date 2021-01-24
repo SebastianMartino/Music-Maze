@@ -21,10 +21,13 @@ class Maze:
 
 			self.visisted = False
 			self.current = False
+			self.goal = False
 
 		def draw(self):
 			if self.current == True:
 				pygame.draw.rect(self.screen, (255,0,0), (self.xx, self.yy, self.width, self.width))
+			elif self.goal == True:
+				pygame.draw.rect(self.screen, (0,255,0), (self.xx, self.yy, self.width, self.width))
 			else:
 				pygame.draw.rect(self.screen, (255,255,255), (self.xx, self.yy, self.width, self.width))
 
@@ -57,6 +60,7 @@ class Maze:
 		#print(self.maze)
 		#self.print_maze()
 		self.maze[0][0].current = True
+		self.maze[size[0]-1][size[1]-1].goal = True
 
 	def update_loc(self, x,y):
 		self.maze[self.current_loc[0]][self.current_loc[1]].current = False
@@ -64,7 +68,7 @@ class Maze:
 		self.current_loc[1] = y
 		self.maze[x][y].current = True
 
-
+		
 	def get_offset(self, direction):
 		if direction == self.Dir.NORTH:
 			return [0, 1]

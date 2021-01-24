@@ -72,6 +72,11 @@ def main():
 		isRight = staffRight.isNoteCorrect(notePlayed)
 
 		cy, cx = maze_o.current_loc
+
+		if maze[cx][cy].goal:
+			#END HAS BEEN REACHED
+			i = 1
+			
 		if isUp:
 			#Move up if possible
 			if maze[cx][cy].north:
