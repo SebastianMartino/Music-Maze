@@ -51,6 +51,47 @@ def main():
 	while running:
 		screen.blit(background, (0, 0))
 		for event in pygame.event.get():
+			if event.type == pygame.KEYDOWN:
+				cx, cy = maze_o.current_loc
+				#print(maze[cx][cy].north,maze[cx][cy].south,maze[cx][cy].west,maze[cx][cy].east)
+				if event.key == pygame.K_UP:
+					if not maze[cx][cy].south:
+						#print('MOVE NORTH')
+						maze_o.update_loc(cx, cy-1)
+						staffUp.randomizeNote()
+						staffDown.randomizeNote()
+						staffLeft.randomizeNote()
+						staffRight.randomizeNote()	
+				if event.key == pygame.K_DOWN:
+					if not maze[cx][cy].north:
+						#print('MOVE SOUTH')
+
+						maze_o.update_loc(cx, cy+1)
+
+						staffUp.randomizeNote()
+						staffDown.randomizeNote()
+						staffLeft.randomizeNote()
+						staffRight.randomizeNote()
+				if event.key == pygame.K_LEFT:
+					if not maze[cx][cy].west:
+						#print('MOVE WEST')
+						maze_o.update_loc(cx-1, cy)
+						staffUp.randomizeNote()
+						staffDown.randomizeNote()
+						staffLeft.randomizeNote()
+						staffRight.randomizeNote()
+
+				if event.key == pygame.K_RIGHT:	
+					if not maze[cx][cy].east:
+						#print('MOVE EAST')
+						maze_o.update_loc(cx+1, cy)
+						staffUp.randomizeNote()
+						staffDown.randomizeNote()
+						staffLeft.randomizeNote()
+						staffRight.randomizeNote()
+
+
+
 			if event.type == pygame.QUIT:
 				running = False
 		
@@ -71,16 +112,17 @@ def main():
 		isLeft = staffLeft.isNoteCorrect(notePlayed)
 		isRight = staffRight.isNoteCorrect(notePlayed)
 
-		cy, cx = maze_o.current_loc
+		cx, cy = maze_o.current_loc
 
 		if maze[cx][cy].goal:
 			#END HAS BEEN REACHED
 			i = 1
-			
+
 		if isUp:
 			#Move up if possible
 			if maze[cx][cy].north:
-				maze_o.update_loc(cy+1, cx)
+				print('MOVE NORTH')
+				maze_o.update_loc(cx, cy+1)
 				staffUp.randomizeNote()
 				staffDown.randomizeNote()
 				staffLeft.randomizeNote()
@@ -88,7 +130,8 @@ def main():
 		elif isDown:
 			#Move down if possible
 			if maze[cx][cy].south:
-				maze_o.update_loc(cy-1, cx)
+				print('MOVE SOUTH')
+				maze_o.update_loc(cx, cy-1)
 				staffUp.randomizeNote()
 				staffDown.randomizeNote()
 				staffLeft.randomizeNote()
@@ -96,7 +139,8 @@ def main():
 		elif isLeft:
 			#Move left if possible
 			if maze[cx][cy].west:
-				maze_o.update_loc(cy, cx-1)
+				print('MOVE WEST')
+				maze_o.update_loc(cx-1, cy)
 				staffUp.randomizeNote()
 				staffDown.randomizeNote()
 				staffLeft.randomizeNote()
@@ -104,7 +148,8 @@ def main():
 		elif isRight:
 			#Move right if possible
 			if maze[cx][cy].east:
-				maze_o.update_loc(cy, cx+1)
+				print('MOVE EAST')
+				maze_o.update_loc(cx+1, cy)
 				staffUp.randomizeNote()
 				staffDown.randomizeNote()
 				staffLeft.randomizeNote()
