@@ -15,7 +15,7 @@ class AudioFrequency:
 		self.stream = self.p.open(format = self.FORMAT, channels = self.CHANNELS, 
 					rate = self.RATE, input = True, frames_per_buffer = self.buffer_size)
 
-		self.tolerance = 0.3
+		self.tolerance = 0.5
 		self.win_s = 4096 # fft size
 		self.hop_s = self.buffer_size # hop size
 		self.pitch_o = aubio.pitch("default", self.win_s, self.hop_s, self.RATE)
