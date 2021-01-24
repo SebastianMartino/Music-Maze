@@ -99,7 +99,7 @@ def main():
 		elif isRight:
 			#Move right if possible
 			if maze[cx][cy].east:
-				maze_o.update_loc(cy+1, cx)
+				maze_o.update_loc(cy, cx+1)
 				staffUp.randomizeNote()
 				staffDown.randomizeNote()
 				staffLeft.randomizeNote()
