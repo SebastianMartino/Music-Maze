@@ -5,8 +5,8 @@ class NoteToYPosLookup:
         self.trebHeight = (E4 - F5)
         self.bassHeight = (G2 - A3)
 
-        self.moveSpaceTreb = self.trebHeight // 8
-        self.moveSpaceBass = self.bassHeight // 8
+        self.moveSpaceTreb = self.trebHeight // 8.0
+        self.moveSpaceBass = self.bassHeight // 8.0
 
         self.lookupTable = {
             "F5": F5,
@@ -33,8 +33,8 @@ class NoteToYPosLookup:
             "F4": F5 + (7*self.moveSpaceTreb),
             "F#4/Gb4": F5 + (7*self.moveSpaceTreb),
 
-            "E4": E4,
-            "E#4/F4": E4,
+            "E4": E4 - 3,
+            "E#4/F4": E4 - 3,
 
             "D4": E4 + self.moveSpaceTreb,
             "D#4/Eb4": E4 + self.moveSpaceTreb,
@@ -66,11 +66,11 @@ class NoteToYPosLookup:
             "B2": A3 + (6*self.moveSpaceBass),
             "B#2/C3": A3 + (6*self.moveSpaceBass),
 
-            "A2": A3 + (7*self.moveSpaceBass),
-            "A#2/Bb2": A3 + (7*self.moveSpaceBass),
+            "A2": A3 + (7*self.moveSpaceBass) - 1,
+            "A#2/Bb2": A3 + (7*self.moveSpaceBass) - 1,
 
-            "G2": G2,
-            "G#2/Ab2": G2
+            "G2": G2 - 3,
+            "G#2/Ab2": G2 - 3
 
         }
 

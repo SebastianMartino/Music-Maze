@@ -38,12 +38,13 @@ class StaffObject:
         self.screen.blit(self.staffImage, (staffX, staffY))
 
         # Create lookup table for note y coordinates
-        self.noteYLookup = noteToYPosLookup.NoteToYPosLookup(staffY + 21 , staffY + 91, staffY + 135, staffY + 179, staffY + 248)
+        self.noteYLookup = noteToYPosLookup.NoteToYPosLookup(staffY + 21 , staffY + 95, staffY + 135, staffY + 179, staffY + 252)
 
         # Create first random note
         self.note = noteObject.NoteObject()
         newNote = random.choice(list(self.noteYLookup.lookupTable.keys()))
         self.updateNote(self.note, newNote)
+        # Manual Note Debugging
         # self.updateNote(self.note, "G2")
 
 

@@ -10,9 +10,9 @@ class NoteObject:
 
         self.yPos = 0
 
-        self.height = 80
+        self.height = 75
 
-        self.width = 40
+        self.width = 50
 
     def setXPos(self, newXPos):
         self.xPos = newXPos
