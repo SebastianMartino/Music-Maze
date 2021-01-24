@@ -31,7 +31,7 @@ class StaffObject:
 
 
         # Create surface object with staff image drawn on it 
-        self.staffImage = pygame.image.load(r'../img/grandStaff.png')
+        self.staffImage = pygame.image.load(r'img/grandStaff.png')
         self.staffImage = pygame.transform.scale(self.staffImage, (self.staffWidth, self.staffHeight)) 
 
         # Blit image onto screen   
@@ -67,7 +67,7 @@ class StaffObject:
             noteInst.setXPos(self.noteXOffset)
             noteInst.setYPos(newYpos)
 
-            noteSprite = pygame.image.load(r'../img/quarter-note.png').convert_alpha()
+            noteSprite = pygame.image.load(r'img/quarter-note.png').convert_alpha()
 
             # pygame.draw.circle(self.screen, self.BLACK, (noteInst.xPos, noteInst.yPos), noteInst.size)
             # pygame.draw.line(self.screen,self.BLACK,(noteInst.xPos + (noteInst.size - 5),noteInst.yPos),(noteInst.xPos + (noteInst.size - 5),noteInst.yPos - 80), 7)
@@ -76,7 +76,7 @@ class StaffObject:
             if("#" in noteDescription):
                 # pygame.draw.line(self.screen, self.BLACK, (noteInst.xPos + (noteInst.size +5), noteInst.yPos - 10), (noteInst.xPos + (noteInst.size + 20), noteInst.yPos - 10), 3)
                 # pygame.draw.line(self.screen, self.BLACK, (noteInst.xPos + (noteInst.size + 12.5), noteInst.yPos - 20), (noteInst.xPos + (noteInst.size + 12.5), noteInst.yPos), 3)
-                noteSprite = pygame.image.load(r'../img/quarter-note-sharp.png').convert_alpha()
+                noteSprite = pygame.image.load(r'img/quarter-note-sharp.png').convert_alpha()
             
             #Check if note is middle c
             # if("C4" in noteDescription or "C#4" in noteDescription):

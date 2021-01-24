@@ -57,8 +57,6 @@ class Maze:
 				temp.append(self.Room(i, j, screen, width, offset))
 			self.maze.append(temp)
 		self.drunken_walk(0,0)	
-		#print(self.maze)
-		#self.print_maze()
 		self.maze[0][0].current = True
 		self.maze[size[0]-1][size[1]-1].goal = True
 
@@ -153,16 +151,3 @@ class Maze:
 					else:
 						self.set_room_dir(room, direction, wall=True)
 	
-
-
-
-
-
-
-
-
-	
-
-	
-
-#Maze((10,10), 0, 0)
