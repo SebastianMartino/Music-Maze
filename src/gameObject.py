@@ -5,6 +5,7 @@ import sys
 import noteObject
 import noteToYPosLookup
 from AudioFrequency import AudioFrequency
+import random
 
 # pygame GameObject class
 class GameObject:
@@ -22,8 +23,10 @@ class GameObject:
     staffWidth = 1280
 
     def __init__ (self):
+
         # Initialize pygame
         pygame.init()
+        # Create AudioFrequency Object for note recognition
         self.audio = AudioFrequency()
         # Assign FPS value
         self.FPS = 30
@@ -50,10 +53,8 @@ class GameObject:
 
         # Create first note on F5
         self.note1 = noteObject.NoteObject()
-        self.note1.setXPos(500)
-        self.note1.setYPos(60)
+        self.updateNote(self.note1, "E#5/F5")
 
-        # pygame.draw.circle(self.screen, self.BLACK, (self.note1.xPos, self.note1.yPos), self.note1.size)
 
 
     # Function to move a note on the screen
@@ -90,12 +91,18 @@ class GameObject:
             
             noteSprite = pygame.transform.scale(noteSprite, (noteInst.width, noteInst.height))
             self.screen.blit(noteSprite, (noteInst.xPos, noteInst.yPos - noteInst.height + (noteInst.height/6)))
-            
+
+    # Helper function to check for correct note played
+    def isNoteCorrect(self):
+        notePlayed = self.audio.get_note()
+        if notePlayed in self.note1.noteDescription:
+            return True
+        else:
+            return False
 
 
-    # Main game loop
-    def gameLoopInstance(self):
-
+    # Boiler plate code for every game loop
+    def gameLoopBoilerPlate(self):
         # Update Screen   
         pygame.display.flip()
    
@@ -108,11 +115,23 @@ class GameObject:
                 sys.exit()
                 # quit the program.   
                 quit()
-        
+        self.FramePerSec.tick(self.FPS)
+
+
+
+    # Main game loop (listen mode)
+    def gameLoopInstanceListenMode(self):
+        self.gameLoopBoilerPlate()
         # Update note position based on tone recognized by microphone
         self.updateNote(self.note1, self.audio.get_note())
-        
 
-        self.FramePerSec.tick(self.FPS)
+
+
+    # Main game loop (play mode)
+    def gameLoopInstancePlayMode(self):
+        self.gameLoopBoilerPlate()
+        if(self.isNoteCorrect()):
+            newNote = random.choice(list(self.noteYLookup.lookupTable.keys()))
+            self.updateNote(self.note1, newNote)
 
 

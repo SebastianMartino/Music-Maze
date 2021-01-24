@@ -13,7 +13,7 @@ import gameObject
 def main():
     game = gameObject.GameObject()
     while True:
-        game.gameLoopInstance()
+        game.gameLoopInstancePlayMode()
 
 
 
