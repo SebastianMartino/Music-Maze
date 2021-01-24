@@ -24,7 +24,7 @@ class StaffObject:
 
         self.staffY = staffY
 
-        self.noteXOffset = staffX + 50
+        self.noteXOffset = staffX + 100
        
         # Create AudioFrequency Object for note recognition
         self.audio = AudioFrequency()
@@ -38,12 +38,13 @@ class StaffObject:
         self.screen.blit(self.staffImage, (staffX, staffY))
 
         # Create lookup table for note y coordinates
-        self.noteYLookup = noteToYPosLookup.NoteToYPosLookup(60,246,361,480,666)
+        self.noteYLookup = noteToYPosLookup.NoteToYPosLookup(staffY + 21 , staffY + 91, staffY + 135, staffY + 179, staffY + 248)
 
         # Create first random note
         self.note = noteObject.NoteObject()
         newNote = random.choice(list(self.noteYLookup.lookupTable.keys()))
         self.updateNote(self.note, newNote)
+        # self.updateNote(self.note, "G2")
 
 
     def reDraw(self):
@@ -57,7 +58,7 @@ class StaffObject:
         newYpos = self.noteYLookup.lookupYPos(noteDescription)
 
         if newYpos != None:
-            # Fill Screen & Re-Blit the staff
+            # Re-Blit the staff
             self.screen.blit(self.staffImage, (self.staffX, self.staffY))
 
             # Update internal note parameters
@@ -77,9 +78,9 @@ class StaffObject:
                 noteSprite = pygame.image.load(r'../img/quarter-note-sharp.png').convert_alpha()
             
             #Check if note is middle c
-            if("C4" in noteDescription or "C#4" in noteDescription):
-                pygame.draw.line(self.screen, self.BLACK, (noteInst.xPos, noteInst.yPos), (noteInst.xPos + (noteInst.width), noteInst.yPos), 7)
-                # noteSprite = pygame.image.load("quarter-note-sharp.png").convert_alpha()
+            # if("C4" in noteDescription or "C#4" in noteDescription):
+            #     pygame.draw.line(self.screen, self.BLACK, (noteInst.xPos, noteInst.yPos), (noteInst.xPos + (noteInst.width), noteInst.yPos), 7)
+            #     # noteSprite = pygame.image.load("quarter-note-sharp.png").convert_alpha()
             
             noteSprite = pygame.transform.scale(noteSprite, (noteInst.width, noteInst.height))
             self.screen.blit(noteSprite, (noteInst.xPos, noteInst.yPos - noteInst.height + (noteInst.height/6)))
